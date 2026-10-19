@@ -139,7 +139,7 @@ joblib
 - [x] Verify: all imports OK, `streamlit --version` → 1.66.0
 - [x] Git initialised, first commit made, pushed to `origin/main`
 
-### Phase 1 — Dataset (1.5 h)
+### Phase 1 — Dataset (1.5 h) ✅ DONE
 **Concept:** The model is only as good as the data. We need one row per day for 3 years.
 
 **Columns:**
@@ -177,16 +177,16 @@ None has tank level, municipal supply or Indian festivals, so the "will water be
 3. In the README and demo, state clearly that the data is synthetic but pattern-calibrated, and that the pipeline works unchanged with a real building's CSV (use the same column names).
 
 **Tasks:**
-- [ ] If the user has a real building CSV → load it, rename columns to match the above, fill gaps
-- [ ] Otherwise (default) → write `data/generate_data.py` with realistic built-in patterns:
+- [x] If the user has a real building CSV → load it, rename columns to match the above, fill gaps
+- [x] Otherwise (default) → write `data/generate_data.py` with realistic built-in patterns:
   - Base usage ≈ (flats × people × ~135 L/person/day)
   - **Weekends:** +15–20% (people at home)
   - **Festivals:** +25–40% (guests, cooking, cleaning). Use the `holidays` library or a hand-made festival list
   - **Summer (Apr–Jun):** +10–15%; monsoon slightly lower
   - Add random noise (±5–8%) so it isn't perfectly clean
   - Simulate tank level day by day: `next_opening = min(capacity, opening + supply - consumption)`
-- [ ] Save to `data/water_data.csv`
-- [ ] Verify: `df.shape` ≈ (1095, 12), no nulls
+- [x] Save to `data/water_data.csv`
+- [x] Verify: `df.shape` ≈ (1095, 12), no nulls
 
 ### Phase 2 — Explore the Patterns (1 h)
 **Concept:** EDA = confirm the story the data tells *before* modelling. These charts also go straight into the demo.
