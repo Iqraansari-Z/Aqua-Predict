@@ -218,20 +218,17 @@ None has tank level, municipal supply or Indian festivals, so the "will water be
 
 > **Target:** R² > 0.85 and MAE within ~8% of average daily use. If worse, add lag features before anything else.
 
-### Phase 4 — Capacity & Availability Logic (1.5 h)
+### Phase 4 — Capacity & Availability Logic (1.5 h) ✅ DONE
 **Concept:** This is the "will water be available?" part — it's simple rules on top of the prediction.
-- [ ] `src/capacity.py`: function `check_availability(predicted_demand, tank_level, supply_expected, tank_capacity)`
-- [ ] Compute:
-  - `available = tank_level + supply_expected`
-  - `coverage_ratio = available / predicted_demand`
-- [ ] Classify:
-  - 🟢 **Safe:** ratio ≥ 1.2
-  - 🟡 **Tight:** 1.0 ≤ ratio < 1.2
-  - 🔴 **Shortage:** ratio < 1.0
-- [ ] Output: status, shortfall in litres (if any), and a plain message ("Expected shortage of 4,200 L on Sunday")
-- [ ] **7-day forecast loop:** predict each of the next 7 days, carry the tank level forward day by day, flag the first day of shortage
-- [ ] 🔸 Suggest an action: "Request an extra tanker / reduce non-essential use"
-- [ ] Verify: lowering supply or raising festival demand flips the status to 🔴
+- [x] `src/capacity.py`: `check_availability(predicted_demand, tank_level, supply_expected, tank_capacity)`
+- [x] `available = tank_level + supply_expected`, `coverage_ratio = available / predicted_demand`
+- [x] Classify: 🟢 Safe (ratio ≥ 1.2), 🟡 Tight (1.0 ≤ ratio < 1.2), 🔴 Shortage (ratio < 1.0)
+- [x] Output: status, icon, shortfall in litres, plain message
+- [x] `forecast_week()`: predicts each day, carries tank level forward, returns the first shortage day
+- [ ] 🔸 Suggest an action (tanker): will be added in the app next to the 🔴 banner
+- [x] Verified: replay of the full dataset reproduces `shortage_l` exactly (0 L difference); lowering supply to 15,000 L/day flips the 7-day forecast to 🔴 on day 3
+
+> **Known limitation:** festival auto-detect matches by (month, day), so moving festivals (Diwali, Holi, Ganesh Chaturthi) can be mislabeled for future dates. The app provides a festival toggle and `festival_dates` override.
 
 ### Phase 5 — Streamlit Frontend (3 h)
 **Concept:** One `app.py`, sidebar for inputs, tabs for content. Don't over-design.
@@ -305,6 +302,9 @@ None has tank level, municipal supply or Indian festivals, so the "will water be
 **What I learned:** R² is capped by the noise in synthetic data; MAE % is the more honest metric here. `dropna()` on this dataset deletes non-festival rows because `festival_name` is empty, so always use `subset=`.
 **Next goal:** Phase 4 capacity logic.
 
+### 19-Oct-2026 — Phase 4
+**What I learned:** The capacity rule is just `max(0, demand − (opening + supply))`, and replaying the real dataset through it is a quick way to prove the logic matches the data. Moving festivals break date-based lookup.
+**Next goal:** Phase 5 Streamlit app.
 ---
 
 ## 🚦 Quick Start Commands
