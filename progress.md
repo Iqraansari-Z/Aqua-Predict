@@ -188,14 +188,17 @@ None has tank level, municipal supply or Indian festivals, so the "will water be
 - [x] Save to `data/water_data.csv`
 - [x] Verify: `df.shape` ≈ (1095, 12), no nulls
 
-### Phase 2 — Explore the Patterns (1 h)
-**Concept:** EDA = confirm the story the data tells *before* modelling. These charts also go straight into the demo.
-- [ ] Average consumption: weekday vs weekend (bar chart)
-- [ ] Average consumption: festival vs normal day
-- [ ] Monthly average consumption (line chart, shows seasons)
-- [ ] Consumption over time for 3 years (line chart)
-- [ ] Write 3–4 one-line insights, e.g. *"Weekends use ~18% more water"*
-- [ ] 🔸 Heatmap: day of week × month
+### Phase 2 — Explore the Patterns (1 h) ✅ DONE
+- [x] Average consumption: weekday vs weekend (bar chart)
+- [x] Average consumption: festival vs normal day
+- [x] Monthly average consumption (line chart)
+- [x] Consumption over time for 3 years (line chart + 30-day average)
+- [x] One-line insights:
+  - Weekends use ~16% more water than weekdays (Sat/Sun ≈ 21,000 L vs ≈ 18,000 L)
+  - Festival days use ~19% more than normal days (Dussehra highest, ≈ 25,000 L)
+  - Occupancy is the strongest driver (corr 0.52); temperature (0.08) and rainfall (-0.01) barely matter
+  - No long-term trend: yearly average stays ≈ 18,800–19,000 L
+- [x] 🔸 Heatmap: day of week × month (skipped)
 
 ### Phase 3 — Features + Model (2.5 h)
 **Concept:** Convert raw columns into signals the model can use, then train and check honestly.
