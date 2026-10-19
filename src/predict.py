@@ -1,5 +1,6 @@
 import joblib
 import pandas as pd
+from functools import lru_cache
 
 from src.features import FEATURE_COLS, get_season
 
@@ -12,7 +13,7 @@ def _load_model(path="models/water_model.joblib"):
         _MODEL = joblib.load(path)
     return _MODEL
 
-
+@lru_cache(maxsize=1)
 def _festival_lookup(path="data/water_data.csv"):
     """Return {(month, day): festival_name} from the historical data."""
     df = pd.read_csv(path)

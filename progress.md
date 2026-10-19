@@ -230,30 +230,17 @@ None has tank level, municipal supply or Indian festivals, so the "will water be
 
 > **Known limitation:** festival auto-detect matches by (month, day), so moving festivals (Diwali, Holi, Ganesh Chaturthi) can be mislabeled for future dates. The app provides a festival toggle and `festival_dates` override.
 
-### Phase 5 — Streamlit Frontend (3 h)
-**Concept:** One `app.py`, sidebar for inputs, tabs for content. Don't over-design.
-
-- [ ] Page config + title + short description
-- [ ] **Sidebar inputs:** date picker, current tank level, expected supply today, tank capacity, occupancy %, temperature
-- [ ] **Tab 1 — Prediction:**
-  - Big metric cards: *Predicted consumption*, *Available water*, *Status (🟢/🟡/🔴)*
-  - Message banner (`st.success` / `st.warning` / `st.error`)
-- [ ] **Tab 2 — 7-Day Forecast:**
-  - Plotly chart: predicted demand vs available water per day
-  - Table with the status per day
-- [ ] **Tab 3 — Usage Patterns (from EDA):**
-  - Weekday vs weekend chart
-  - Festival vs normal chart
-  - Monthly trend
-  - Insight text lines
-- [ ] **Tab 4 — Model Performance:**
-  - Actual vs predicted chart
-  - MAE / RMSE / R² metrics
-  - Feature importance
-- [ ] Use `@st.cache_resource` for the model and `@st.cache_data` for the CSV (keeps the app fast)
-- [ ] 🔸 "What-if" toggle: *"What if tomorrow is a festival?"*
-- [ ] 🔸 Upload your own CSV tab
-- [ ] Verify: `streamlit run app.py` works end-to-end with no errors
+### Phase 5 — Streamlit Frontend (3 h) ✅ DONE
+- [x] Page config + title + short description
+- [x] Sidebar inputs: date, tank level, supply, tank capacity, occupancy, temperature, festival override (Auto/Yes/No)
+- [x] Tab 1 — Prediction: metric cards, status banner, tanker suggestion on 🔴
+- [x] Tab 2 — 7-Day Forecast: demand vs available chart, status table, first-shortage banner, festival date picker
+- [x] Tab 3 — Usage Patterns: reuses `src/eda.py` charts + insight lines
+- [x] Tab 4 — Model Performance: metrics, actual vs predicted, feature importance (read from `models/` files)
+- [x] Caching: `@st.cache_data` for CSV and model files, in-memory model cache and `lru_cache` for festival lookup in `predict.py`
+- [x] 🔸 What-if festival: covered by the sidebar festival override
+- [ ] 🔸 Upload your own CSV tab: skipped
+- [x] Verified: `streamlit run app.py` runs end-to-end, all four tabs load
 
 ### Phase 6 — Deploy (1 h)
 - [ ] Make sure `models/water_model.joblib` and `data/water_data.csv` are **committed** (Streamlit Cloud reads from the repo)
