@@ -200,20 +200,21 @@ None has tank level, municipal supply or Indian festivals, so the "will water be
   - No long-term trend: yearly average stays ≈ 18,800–19,000 L
 - [x] 🔸 Heatmap: day of week × month (skipped)
 
-### Phase 3 — Features + Model (2.5 h)
+### Phase 3 — Features + Model (2.5 h) ✅ DONE
 **Concept:** Convert raw columns into signals the model can use, then train and check honestly.
-- [x] `src/features.py`: build features — `day_of_week`, `is_weekend`, `is_festival`, `month`, `season`, `temp_c`, `rainfall_mm`, `occupancy_pct`
-  - 🔸 Lag features: yesterday's consumption, 7-day rolling average (large accuracy boost)
-  - 🔸 `days_to_next_festival`
-- [x] **Time-based split:** train = first ~2.5 years, test = last ~6 months (no shuffling)
-- [ ] Train a baseline: **LinearRegression** (to compare)
-- [ ] Train main model: **RandomForestRegressor** (or GradientBoosting)
-- [ ] Evaluate with **MAE, RMSE, R²** — print a comparison table
-- [ ] Plot **actual vs predicted** on the test period
-- [ ] Plot **feature importance** (shows weekend/festival matter)
-- [ ] Save model: `joblib.dump(model, "models/water_model.joblib")`
-- [ ] `src/predict.py`: function `predict_demand(date, temp, occupancy, ...) → litres`
-- [ ] Verify: a Sunday-festival prediction > a normal Tuesday prediction
+- [x] `src/features.py`: build features
+  - 🔸 Lag features: tested, skipped (R² 0.663 → 0.664, no real gain)
+  - 🔸 `days_to_next_festival`: skipped
+- [x] **Time-based split:** train = first ~2.5 years, test = last 182 days (no shuffling)
+- [x] Baseline LinearRegression
+- [x] RandomForestRegressor
+- [x] Evaluate: MAE 889 L (4.5%), RMSE 1,125 L, R² 0.661 (LinearRegression: MAE 869, R² 0.667)
+- [x] Saved `models/metrics.json`, `test_predictions.csv`, `feature_importance.csv` (plots will be drawn in the app, Tab 4)
+- [x] Save model: `models/water_model.joblib`
+- [x] `src/predict.py`: `predict_demand(date, temp_c, occupancy_pct, ...) → litres`
+- [x] Verified: festival Sunday (20,687 L) > normal Tuesday (18,279 L)
+
+> **Result:** MAE target met (4.5% < 8%). R² 0.66 is below the 0.85 target: the error matches the ±5-8% random noise in the synthetic data, and lag features did not help. Occupancy is the top driver (importance 0.63).
 
 > **Target:** R² > 0.85 and MAE within ~8% of average daily use. If worse, add lag features before anything else.
 
@@ -300,7 +301,9 @@ None has tank level, municipal supply or Indian festivals, so the "will water be
 ```
 
 ### Log
-*(start here)*
+### 19-Oct-2026 — Phase 3
+**What I learned:** R² is capped by the noise in synthetic data; MAE % is the more honest metric here. `dropna()` on this dataset deletes non-festival rows because `festival_name` is empty, so always use `subset=`.
+**Next goal:** Phase 4 capacity logic.
 
 ---
 

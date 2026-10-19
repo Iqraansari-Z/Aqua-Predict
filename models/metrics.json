@@ -1,0 +1,16 @@
+[
+  {
+    "Model": "LinearRegression (baseline)",
+    "MAE": 869,
+    "MAE %": 4.4,
+    "RMSE": 1115,
+    "R2": 0.667
+  },
+  {
+    "Model": "RandomForest",
+    "MAE": 889,
+    "MAE %": 4.5,
+    "RMSE": 1125,
+    "R2": 0.661
+  }
+]

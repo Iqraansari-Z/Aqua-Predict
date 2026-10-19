@@ -1,5 +1,9 @@
 import numpy as np
 import pandas as pd
+import json
+import os
+
+import joblib
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
@@ -40,13 +44,32 @@ def main():
     forest = RandomForestRegressor(n_estimators=300, min_samples_leaf=3, random_state=42, n_jobs=-1)
     forest.fit(X_train, y_train)
 
+    rf_pred = forest.predict(X_test)
     results = [
         evaluate("LinearRegression (baseline)", y_test, baseline.predict(X_test)),
-        evaluate("RandomForest", y_test, forest.predict(X_test)),
+        evaluate("RandomForest", y_test, rf_pred),
     ]
     print(pd.DataFrame(results).to_string(index=False))
     print()
     print("Avg daily consumption in test period:", round(y_test.mean()), "L")
+
+    # ---- Save model + artifacts for the app ----
+    os.makedirs("models", exist_ok=True)
+    joblib.dump(forest, "models/water_model.joblib")
+
+    with open("models/metrics.json", "w") as f:
+        json.dump(results, f, indent=2)
+
+    pd.DataFrame({"date": test["date"], "actual": y_test, "predicted": rf_pred.round(0)}) \
+        .to_csv("models/test_predictions.csv", index=False)
+
+    pd.DataFrame({"feature": FEATURE_COLS, "importance": forest.feature_importances_}) \
+        .sort_values("importance", ascending=False) \
+        .to_csv("models/feature_importance.csv", index=False)
+
+    print("\nFeature importance:")
+    print(pd.read_csv("models/feature_importance.csv").round(3).to_string(index=False))
+    print("\nSaved: models/water_model.joblib, metrics.json, test_predictions.csv, feature_importance.csv")
 
 
 if __name__ == "__main__":
