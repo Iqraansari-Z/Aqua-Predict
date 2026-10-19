@@ -202,10 +202,10 @@ None has tank level, municipal supply or Indian festivals, so the "will water be
 
 ### Phase 3 — Features + Model (2.5 h)
 **Concept:** Convert raw columns into signals the model can use, then train and check honestly.
-- [ ] `src/features.py`: build features — `day_of_week`, `is_weekend`, `is_festival`, `month`, `season`, `temp_c`, `rainfall_mm`, `occupancy_pct`
+- [x] `src/features.py`: build features — `day_of_week`, `is_weekend`, `is_festival`, `month`, `season`, `temp_c`, `rainfall_mm`, `occupancy_pct`
   - 🔸 Lag features: yesterday's consumption, 7-day rolling average (large accuracy boost)
   - 🔸 `days_to_next_festival`
-- [ ] **Time-based split:** train = first ~2.5 years, test = last ~6 months (no shuffling)
+- [x] **Time-based split:** train = first ~2.5 years, test = last ~6 months (no shuffling)
 - [ ] Train a baseline: **LinearRegression** (to compare)
 - [ ] Train main model: **RandomForestRegressor** (or GradientBoosting)
 - [ ] Evaluate with **MAE, RMSE, R²** — print a comparison table
