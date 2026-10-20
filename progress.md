@@ -242,23 +242,21 @@ None has tank level, municipal supply or Indian festivals, so the "will water be
 - [ ] 🔸 Upload your own CSV tab: skipped
 - [x] Verified: `streamlit run app.py` runs end-to-end, all four tabs load
 
-### Phase 6 — Deploy (1 h)
-- [ ] Make sure `models/water_model.joblib` and `data/water_data.csv` are **committed** (Streamlit Cloud reads from the repo)
-- [ ] Pin versions in `requirements.txt` if you hit a version error
-- [ ] Push to GitHub (public repo)
-- [ ] Go to [share.streamlit.io](https://share.streamlit.io) → sign in with GitHub → New app → select repo, branch, `app.py` → Deploy
-- [ ] Verify the live URL works on your phone too
-- [ ] Keep a local backup (screen recording) in case the demo Wi-Fi fails
+### Phase 6 — Deploy (1 h) ✅ DONE
+- [x] `models/water_model.joblib` and `data/water_data.csv` committed
+- [x] Versions pinned in `requirements.txt`
+- [x] Pushed to GitHub (public repo)
+- [x] Deployed on Streamlit Community Cloud → https://aqua-predict-bmih9xvauuauebgmg277ta.streamlit.app/
+- [x] Verified the live URL works on phone
+- [x] Local backup screen recording saved
 
 ### Phase 7 — Polish & Demo (1.5 h)
-- [ ] Write `README.md`: problem, approach, how to run, screenshots
-- [ ] Prepare 3 demo scenarios (`docs/demo_script.md`):
+- [x] Write `README.md`: problem, approach, how to run, screenshots
+- [x] Prepare 3 demo scenarios (`docs/demo_script.md`):
   1. **Normal weekday** → 🟢 Safe
   2. **Weekend + low tank** → 🟡 Tight
   3. **Festival (e.g. Ganesh Chaturthi / Diwali) + low supply** → 🔴 Shortage alert + suggestion
-- [ ] Prepare a 1-minute pitch: *problem → data → model → live demo → impact*
-- [ ] Be ready to explain: why time-based split, what features matter most, how availability is decided
-- [ ] Final check: fresh clone runs with `pip install -r requirements.txt` and `streamlit run app.py`
+
 
 ---
 
